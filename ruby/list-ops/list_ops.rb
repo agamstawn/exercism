@@ -1,24 +1,41 @@
 class ListOps
 	def self.arrays(arr_params)
-		arr_params.length
+		# arr_params.length
+		result = 0
+	    arr_params.each { |n| result += 1 }
+	    result
 	end
 	def self.reverser(arr_params)
-		arr_params.reverse
+		# arr_params.reverse
+		arr_result = []
+	    (arr_params.size - 1).downto(0) do |i|
+	      arr_result << arr_params[i]
+	    end
+	    arr_result
 	end
-	def self.concatter(firs_arr,second_arr)
-		firs_arr+second_arr
+	def self.concatter(first_arr,second_arr)
+		first_arr+second_arr
 	end
 	def self.mapper(arr_params)
 		arr_result=[]
-		arr_params.each do |i|
-			arr_result.push(yield(i))
-		end
-		arr_result
+	    if block_given?
+	      arr_params.each do |x|
+	        n = yield(x)
+	        arr_result << n
+	      end
+	    end
+	    arr_result
 	end
 	def self.filterer(arr_params,&code)
-		result=[]
-		arr_params.each {|i|  result<<i if code.call(i)}
-		result
+		arr_result = []
+	    if code
+	      arr_params.each { |x|
+	        arr_result << x if yield(x)
+	      }
+	    else
+	      return arr_params
+	    end
+	    arr_result
 	end
 	def self.sum_reducer(arr_params)
 		result=0
